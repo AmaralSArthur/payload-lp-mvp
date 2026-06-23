@@ -2,13 +2,14 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { DsModule } from '@githubanotaai/design-system';
 
 import { PayloadService, PayloadPage } from '../../services/payload.service';
 
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, DsModule],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss',
 })
@@ -57,5 +58,15 @@ export class LandingComponent implements OnInit, OnDestroy {
 
   getMediaUrl(media: any, size?: string): string {
     return this.payloadService.getMediaUrl(media, size);
+  }
+
+  openAdmin(): void {
+    window.open('http://localhost:3000/admin', '_blank');
+  }
+
+  navigateTo(url: string): void {
+    if (url) {
+      window.location.href = url;
+    }
   }
 }

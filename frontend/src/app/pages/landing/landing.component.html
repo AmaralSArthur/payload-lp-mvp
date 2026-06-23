@@ -21,7 +21,7 @@
       <div class="hero-content">
         <h1>Build Something Amazing</h1>
         <p>This landing page is powered by Payload CMS. Create a page with slug "home" in the admin panel to customize this content.</p>
-        <a href="http://localhost:3000/admin" target="_blank" class="cta-button">Open Admin Panel</a>
+        <anota-button size="lg" (click)="openAdmin()">Open Admin Panel</anota-button>
       </div>
     </section>
 
@@ -50,7 +50,7 @@
       <div class="cta-card">
         <h2>Ready to Get Started?</h2>
         <p>Set up your content in Payload CMS and launch your landing page today.</p>
-        <a href="http://localhost:3000/admin" target="_blank" class="cta-button secondary">Go to Admin</a>
+        <anota-button size="lg" (click)="openAdmin()">Go to Admin</anota-button>
       </div>
     </section>
   </main>
@@ -73,7 +73,7 @@
                 <p>{{ $any(section).subheadline }}</p>
               }
               @if ($any(section).ctaText) {
-                <a [href]="$any(section).ctaLink || '#'" class="cta-button">{{ $any(section).ctaText }}</a>
+                <anota-button size="lg" (click)="navigateTo($any(section).ctaLink)">{{ $any(section).ctaText }}</anota-button>
               }
             </div>
           </section>
@@ -102,13 +102,7 @@
               @if ($any(section).subheadline) {
                 <p>{{ $any(section).subheadline }}</p>
               }
-              <a
-                [href]="$any(section).buttonLink || '#'"
-                class="cta-button"
-                [class.secondary]="$any(section).backgroundColor === 'light' || $any(section).backgroundColor === 'white'"
-              >
-                {{ $any(section).buttonText }}
-              </a>
+              <anota-button size="lg" (click)="navigateTo($any(section).buttonLink)">{{ $any(section).buttonText }}</anota-button>
             </div>
           </section>
         }
