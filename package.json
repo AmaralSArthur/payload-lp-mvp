@@ -1,0 +1,13 @@
+{
+  "name": "payload-lp-mvp",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Landing page MVP with Angular frontend and Payload CMS backend",
+  "scripts": {
+    "install:all": "cd backend && npm install && cd ../frontend && npm install",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm start",
+    "build:frontend": "cd frontend && npm run build",
+    "build:backend": "cd backend && npm run build"
+  }
+}

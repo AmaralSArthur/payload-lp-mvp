@@ -1,0 +1,125 @@
+<!-- Loading state -->
+@if (loading) {
+  <div class="loading-container">
+    <div class="spinner"></div>
+    <p>Loading...</p>
+  </div>
+}
+
+<!-- Error state -->
+@if (error) {
+  <div class="error-container">
+    <p class="error-message">{{ error }}</p>
+    <button class="retry-btn" (click)="retry()">Retry</button>
+  </div>
+}
+
+<!-- Fallback: no Payload content available -->
+@if (!loading && !error && !page) {
+  <main class="landing">
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Build Something Amazing</h1>
+        <p>This landing page is powered by Payload CMS. Create a page with slug "home" in the admin panel to customize this content.</p>
+        <a href="http://localhost:3000/admin" target="_blank" class="cta-button">Open Admin Panel</a>
+      </div>
+    </section>
+
+    <section class="features">
+      <h2>Why Choose Us</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <span class="feature-icon">🚀</span>
+          <h3>Fast Performance</h3>
+          <p>Optimized for speed and conversion with modern web technologies.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">🎨</span>
+          <h3>Fully Customizable</h3>
+          <p>Manage all content through Payload CMS — no code changes needed.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-icon">📊</span>
+          <h3>Analytics Ready</h3>
+          <p>Built with tracking and analytics in mind to measure what matters.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta cta-primary">
+      <div class="cta-card">
+        <h2>Ready to Get Started?</h2>
+        <p>Set up your content in Payload CMS and launch your landing page today.</p>
+        <a href="http://localhost:3000/admin" target="_blank" class="cta-button secondary">Go to Admin</a>
+      </div>
+    </section>
+  </main>
+}
+
+<!-- Dynamic content from Payload CMS -->
+@if (page) {
+  <main class="landing">
+    @for (section of page.sections; track $index) {
+      @switch (section.blockType) {
+        @case ('hero') {
+          <section
+            class="hero"
+            [style.backgroundImage]="getMediaUrl($any(section).backgroundImage, 'hero') ? 'url(' + getMediaUrl($any(section).backgroundImage, 'hero') + ')' : 'none'"
+            [class.has-bg]="!!getMediaUrl($any(section).backgroundImage, 'hero')"
+          >
+            <div class="hero-content">
+              <h1>{{ $any(section).headline }}</h1>
+              @if ($any(section).subheadline) {
+                <p>{{ $any(section).subheadline }}</p>
+              }
+              @if ($any(section).ctaText) {
+                <a [href]="$any(section).ctaLink || '#'" class="cta-button">{{ $any(section).ctaText }}</a>
+              }
+            </div>
+          </section>
+        }
+        @case ('features') {
+          <section class="features">
+            <h2>{{ $any(section).sectionTitle }}</h2>
+            @if ($any(section).sectionSubtitle) {
+              <p class="section-subtitle">{{ $any(section).sectionSubtitle }}</p>
+            }
+            <div class="features-grid">
+              @for (feature of $any(section).features; track $index) {
+                <div class="feature-card">
+                  <span class="feature-icon">{{ feature.icon }}</span>
+                  <h3>{{ feature.title }}</h3>
+                  <p>{{ feature.description }}</p>
+                </div>
+              }
+            </div>
+          </section>
+        }
+        @case ('cta') {
+          <section class="cta" [class]="'cta cta-' + $any(section).backgroundColor">
+            <div class="cta-card">
+              <h2>{{ $any(section).headline }}</h2>
+              @if ($any(section).subheadline) {
+                <p>{{ $any(section).subheadline }}</p>
+              }
+              <a
+                [href]="$any(section).buttonLink || '#'"
+                class="cta-button"
+                [class.secondary]="$any(section).backgroundColor === 'light' || $any(section).backgroundColor === 'white'"
+              >
+                {{ $any(section).buttonText }}
+              </a>
+            </div>
+          </section>
+        }
+        @case ('richText') {
+          <section class="richtext">
+            <div class="richtext-content">
+              <!-- Rich text content from Payload CMS -->
+            </div>
+          </section>
+        }
+      }
+    }
+  </main>
+}
