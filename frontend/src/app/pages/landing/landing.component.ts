@@ -1,15 +1,26 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DsModule } from '@githubanotaai/design-system';
 
 import { PayloadService, PayloadPage } from '../../services/payload.service';
+import { environment } from '../../../environments/environment';
+
+interface RegistrationForm {
+  name: string;
+  email: string;
+  company: string;
+  phone: string;
+  message: string;
+}
 
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [CommonModule, DsModule],
+  imports: [CommonModule, FormsModule, DsModule],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss',
 })
@@ -18,11 +29,18 @@ export class LandingComponent implements OnInit, OnDestroy {
   loading = true;
   error: string | null = null;
 
+  form: RegistrationForm = { name: '', email: '', company: '', phone: '', message: '' };
+  formSubmitted = false;
+  formSubmitting = false;
+  formError: string | null = null;
+  formSuccessMessage = '';
+
   private routeSub?: Subscription;
 
   constructor(
     private payloadService: PayloadService,
     private route: ActivatedRoute,
+    private http: HttpClient,
   ) {}
 
   ngOnInit(): void {
@@ -54,6 +72,31 @@ export class LandingComponent implements OnInit, OnDestroy {
         this.loading = false;
       },
     });
+  }
+
+  submitRegistration(successMessage: string): void {
+    if (this.formSubmitting) return;
+    this.formSubmitting = true;
+    this.formError = null;
+    this.formSuccessMessage = successMessage;
+
+    const slug = this.route.snapshot.paramMap.get('slug') || 'home';
+    this.http
+      .post(`${environment.payloadApiUrl}/registrations`, {
+        ...this.form,
+        pageSlug: slug,
+      })
+      .subscribe({
+        next: () => {
+          this.formSubmitted = true;
+          this.formSubmitting = false;
+          this.form = { name: '', email: '', company: '', phone: '', message: '' };
+        },
+        error: () => {
+          this.formError = 'Something went wrong. Please try again.';
+          this.formSubmitting = false;
+        },
+      });
   }
 
   getMediaUrl(media: any, size?: string): string {

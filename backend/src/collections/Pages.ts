@@ -163,6 +163,41 @@ export const Pages: CollectionConfig = {
           ],
         },
         {
+          slug: 'registrationForm',
+          labels: {
+            singular: 'Registration Form',
+            plural: 'Registration Forms',
+          },
+          fields: [
+            {
+              name: 'title',
+              type: 'text',
+              label: 'Section Title',
+              required: true,
+              defaultValue: 'Get Started',
+            },
+            {
+              name: 'subtitle',
+              type: 'textarea',
+              label: 'Section Subtitle',
+            },
+            {
+              name: 'submitButtonText',
+              type: 'text',
+              label: 'Submit Button Text',
+              required: true,
+              defaultValue: 'Submit',
+            },
+            {
+              name: 'successMessage',
+              type: 'text',
+              label: 'Success Message',
+              required: true,
+              defaultValue: 'Thanks! We will be in touch shortly.',
+            },
+          ],
+        },
+        {
           slug: 'richText',
           labels: {
             singular: 'Rich Text Section',

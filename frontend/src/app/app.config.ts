@@ -2,6 +2,7 @@ import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } fr
 import { provideRouter } from '@angular/router';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
 import { AnotaToastModule } from '@githubanotaai/design-system';
 
 import { routes } from './app.routes';
@@ -12,6 +13,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(withInterceptorsFromDi()),
     provideAnimations(),
-    importProvidersFrom(AnotaToastModule),
+    importProvidersFrom(FormsModule, AnotaToastModule),
   ],
 };

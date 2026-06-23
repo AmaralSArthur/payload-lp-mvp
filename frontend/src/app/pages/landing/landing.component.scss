@@ -247,6 +247,127 @@
   }
 }
 
+/* Registration Form */
+.reg-form-section {
+  padding: 5rem 2rem;
+  background: #f8f9fa;
+
+  .reg-form-container {
+    max-width: 640px;
+    margin: 0 auto;
+    text-align: center;
+
+    h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 0 0 1rem;
+      color: #1a1a1a;
+    }
+
+    .section-subtitle {
+      font-size: 1.1rem;
+      color: #666;
+      margin: 0 auto 2.5rem;
+      max-width: 480px;
+    }
+  }
+}
+
+.success-message {
+  background: #ecfdf5;
+  border: 1px solid #6ee7b7;
+  border-radius: 0.75rem;
+  padding: 2rem;
+  text-align: center;
+
+  .success-icon {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    font-size: 1.15rem;
+    color: #065f46;
+    margin: 0;
+  }
+}
+
+.reg-form {
+  text-align: left;
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+
+    @media (max-width: 500px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .form-group {
+    margin-bottom: 1.25rem;
+
+    &.full-width {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 0.4rem;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid #d1d5db;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      font-family: inherit;
+      color: #1a1a1a;
+      background: white;
+      transition: border-color 0.2s, box-shadow 0.2s;
+
+      &::placeholder {
+        color: #9ca3af;
+      }
+
+      &:focus {
+        outline: none;
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+      }
+
+      &.ng-invalid.ng-touched {
+        border-color: #ef4444;
+      }
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+  }
+
+  .form-error {
+    color: #dc2626;
+    font-size: 0.9rem;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  anota-button {
+    display: flex;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .hero {

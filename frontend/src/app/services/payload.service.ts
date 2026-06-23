@@ -52,7 +52,15 @@ export interface RichTextSection {
   content: any;
 }
 
-export type PageSection = HeroSection | FeaturesSection | CtaSection | RichTextSection;
+export interface RegistrationFormSection {
+  blockType: 'registrationForm';
+  title: string;
+  subtitle?: string;
+  submitButtonText: string;
+  successMessage: string;
+}
+
+export type PageSection = HeroSection | FeaturesSection | CtaSection | RegistrationFormSection | RichTextSection;
 
 export interface PayloadPage {
   id: string;

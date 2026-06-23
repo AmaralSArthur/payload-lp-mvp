@@ -106,6 +106,62 @@
             </div>
           </section>
         }
+        @case ('registrationForm') {
+          <section class="reg-form-section">
+            <div class="reg-form-container">
+              <h2>{{ $any(section).title }}</h2>
+              @if ($any(section).subtitle) {
+                <p class="section-subtitle">{{ $any(section).subtitle }}</p>
+              }
+
+              @if (formSubmitted) {
+                <div class="success-message">
+                  <span class="success-icon">✅</span>
+                  <p>{{ formSuccessMessage }}</p>
+                </div>
+              } @else {
+                <form #regForm="ngForm" class="reg-form">
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label for="name">Full Name *</label>
+                      <input id="name" name="name" [(ngModel)]="form.name" required placeholder="Your full name" />
+                    </div>
+                    <div class="form-group">
+                      <label for="email">Email *</label>
+                      <input id="email" name="email" type="email" [(ngModel)]="form.email" required placeholder="you@company.com" />
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label for="company">Company</label>
+                      <input id="company" name="company" [(ngModel)]="form.company" placeholder="Your company" />
+                    </div>
+                    <div class="form-group">
+                      <label for="phone">Phone</label>
+                      <input id="phone" name="phone" type="tel" [(ngModel)]="form.phone" placeholder="+1 (555) 000-0000" />
+                    </div>
+                  </div>
+                  <div class="form-group full-width">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" [(ngModel)]="form.message" rows="3" placeholder="Tell us about your needs..."></textarea>
+                  </div>
+
+                  @if (formError) {
+                    <p class="form-error">{{ formError }}</p>
+                  }
+
+                  <anota-button
+                    size="lg"
+                    (click)="regForm.valid && submitRegistration($any(section).successMessage || 'Thanks!')"
+                    [class.loading]="formSubmitting"
+                  >
+                    {{ formSubmitting ? 'Submitting...' : ($any(section).submitButtonText || 'Submit') }}
+                  </anota-button>
+                </form>
+              }
+            </div>
+          </section>
+        }
         @case ('richText') {
           <section class="richtext">
             <div class="richtext-content">
